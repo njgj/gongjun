@@ -1,0 +1,78 @@
+{include file='public/header'}
+<body>
+<blockquote class="layui-elem-quote" style="text-align: right">
+<form class="layui-form layui-input-inline"  lay-filter="ssform">
+
+	<div class="layui-input-inline">
+		<input type="text" name="title" value="" placeholder="请输入关键字" class="layui-input">
+	</div>
+    <button class="layui-btn" lay-submit="" lay-filter="search"><i class="layui-icon layui-btn-icon"></i>查询</button>
+	<a class="layui-btn layui-btn-danger batchDel">批量删除</a>
+
+</form>
+</blockquote>
+		
+<table id="demo" lay-filter="mytable"></table>
+ 
+<!-- 表格操作按钮集 -->
+<script type="text/html" id="barOption">
+    <a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
+    <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">删除</a>
+</script>
+
+ {include file='public/footer'}
+<script>
+layui.use(['table','form'], function(){
+  var table = layui.table
+  ,form = layui.form;
+	
+  //第一个实例
+  table.render({
+    elem: '#demo'
+	,id:'datatable'
+    ,url: "{:url('manage/news/show','','')}" //数据接口
+    ,page: true //开启分页
+	,limit:15
+    ,cols: [[ //表头
+	   {type:'checkbox'}
+      ,{field: 'id', title: 'ID', width:80, sort: true}
+      ,{field: 'title', title: '标题', sort: true}
+      ,{field: 'classname', title: '类别', width:80, sort: true}
+      ,{field: 'username', title: '用户名', width:80} 
+      ,{field: 'addtime', title: '时间', width: 170, sort: true}
+	  ,{fixed: 'right', title: '操作', width: 180, align: 'center', toolbar: '#barOption'} //这里的toolbar值是模板元素的选择器
+
+    ]]
+  });
+	
+                form.on('submit(search)', function (data) {
+                	table.reload('datatable', {
+                		where: {
+                			title: data.field.title
+                		}
+                	});
+                    return false;
+                });
+
+    //监听工具条
+    table.on('tool(mytable)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+        var data = obj.data //获得当前行数据
+            ,layEvent = obj.event; //获得 lay-event 对应的值
+        var tr = obj.tr; //获得当前行 tr 的DOM对象
+
+        if(layEvent === 'detail'){
+            layer.msg('查看操作');
+        } else if(layEvent === 'del'){
+            alert($(tr).html());
+            //del(tr,data.title,'__MAN__/news/del',data.id);
+        } else if(layEvent === 'edit'){
+            //alert(data.id);
+            newdialog('编辑','__MAN__/news/edit/id/'+data.id,800,550);
+        }
+    });
+});
+</script>
+
+</body>
+</html>

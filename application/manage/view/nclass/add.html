@@ -1,0 +1,85 @@
+{include file='public/header'}
+<body>
+<form class="layui-form layui-form-pane" action="__MAN__/nclass/save/tb/{$tb}" method="post">
+  <div class="layui-form-item">
+    <label class="layui-form-label">类别名称</label>
+    <div class="layui-input-block">
+      <input type="text" name="classname" required  lay-verify="required"  class="layui-input" value="{$res.classname|default=''}">
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">上级类别</label>
+    <div class="layui-input-block">
+      <select name="parentid" lay-verify="number">
+        <option value="0">-作为父类-</option>
+        {$option}
+      </select>
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <div class="layui-inline">
+      <label class="layui-form-label">排序ID</label>
+      <div class="layui-input-block">
+        <input type="number" name="orderid" required  lay-verify="required"  class="layui-input" value="{$res.orderid|default=''}">
+      </div>
+    </div>
+    <div class="layui-inline">
+      <label class="layui-form-label">编码</label>
+      <div class="layui-input-block">
+        <input type="text" name="code" class="layui-input" value="{$res.code|default=''}">
+      </div>
+    </div>
+  </div>    
+  
+  <div class="layui-form-item">
+    <label class="layui-form-label">图标</label>
+    <div class="layui-input-block">
+      <input type="text" name="imgurl"  class="layui-input"  value="{$res.imgurl|default=''}">
+    </div>
+  </div>
+  
+  <div class="layui-form-item">
+    <label class="layui-form-label">URL</label>
+    <div class="layui-input-block">
+      <input type="text" name="url"  class="layui-input"  value="{$res.url|default=''}">
+    </div>
+  </div>
+  
+   <div class="layui-form-item layui-form-text">
+    <label class="layui-form-label">内容</label>
+    <div class="layui-input-block">
+      <textarea name="content" placeholder="请输入内容" class="layui-textarea">{$res.content|default=''}</textarea>
+    </div>
+  </div>   
+        
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+      <button class="layui-btn" lay-submit lay-filter="OK">立即提交</button>
+    
+      <input name="Action" type="hidden" value="{$Action}">
+      {if $Action=='Edit'}
+      <input type="hidden" name="classid" value="{$res.classid}">
+      {/if}
+    </div>
+  </div>
+</form>
+
+{include file='public/footer'} 
+<script>
+getSampleEditor('content');
+layui.use('form', function(){
+  var form = layui.form;
+  
+  //监听提交
+  form.on('submit(OK)', function(data){
+    //layer.msg(JSON.stringify(data.field));
+    //return false;
+	  
+  });
+});
+</script>
+
+</body>
+</html>

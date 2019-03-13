@@ -1,0 +1,45 @@
+<div class="layui-logo my-header-logo">{:config('gocms.name')}</div>   
+
+<div class="layui-nav layui-layout-left my-header-btn">
+	<button class="layui-btn layui-btn-sm btn-nav"><i class="layui-icon">&#xe609;</i></button>
+</div>
+
+
+<!-- 顶部左侧添加选项卡监听 -->
+<!--    <ul class="layui-nav layui-layout-left" lay-filter="side-top-left">
+  <li class="layui-nav-item"><a href="">控制台</a></li>
+  <li class="layui-nav-item"><a href="">商品管理</a></li>
+  <li class="layui-nav-item"><a href="">用户</a></li>
+  <li class="layui-nav-item">
+	<a href="javascript:;">其它系统</a>
+	<dl class="layui-nav-child">
+	  <dd><a href="">邮件管理</a></dd>
+	  <dd><a href="">消息管理</a></dd>
+	  <dd><a href="">授权管理</a></dd>
+	</dl>
+  </li>
+</ul>-->
+
+<!-- 顶部右侧添加选项卡监听 -->
+<ul class="layui-nav layui-layout-right" lay-filter="side-top-right">
+	   <li class="layui-nav-item">
+			<a class="name" href="javascript:;"><i class="layui-icon">&#xe629;</i>主题</a>
+			<dl class="layui-nav-child">
+				<dd data-skin="0"><a href="javascript:;">默认</a></dd>
+				<dd data-skin="1"><a href="javascript:;">橙色</a></dd>
+				<dd data-skin="2"><a href="javascript:;">蓝色</a></dd>
+			</dl>
+		</li>
+
+  <li class="layui-nav-item">
+	<a href="javascript:;">
+	  <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+	  {:session('username')}
+	</a>
+	<dl class="layui-nav-child">
+	  <dd><a href="">基本资料</a></dd>
+	  <dd><a href="">安全设置</a></dd>
+	</dl>
+  </li>
+  <li class="layui-nav-item"><a href="{:url('/manage/login')}">退出</a></li>
+</ul>

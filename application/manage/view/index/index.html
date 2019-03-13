@@ -1,0 +1,142 @@
+{include file='public/header'}
+<style>
+.rightMess { left:auto !important; right: 0; bottom: 0; } 
+</style>
+<body class="layui-layout-body" style="padding: 0 !important;">
+<div class="layui-layout layui-layout-admin">
+  <div class="layui-header my-header">
+	<div class="layui-logo my-header-logo"> {:config('gocms.name')}</div>   
+
+	<div class="layui-nav layui-layout-left my-header-btn">
+		<button class="layui-btn layui-btn-sm btn-nav"><i class="layui-icon">&#xe609;</i></button>
+	</div>
+
+
+	<!-- 顶部左侧添加选项卡监听 -->
+	<!--    <ul class="layui-nav layui-layout-left" lay-filter="side-top-left">
+	  <li class="layui-nav-item"><a href="">控制台</a></li>
+	  <li class="layui-nav-item"><a href="">商品管理</a></li>
+	  <li class="layui-nav-item"><a href="">用户</a></li>
+	  <li class="layui-nav-item">
+		<a href="javascript:;">其它系统</a>
+		<dl class="layui-nav-child">
+		  <dd><a href="">邮件管理</a></dd>
+		  <dd><a href="">消息管理</a></dd>
+		  <dd><a href="">授权管理</a></dd>
+		</dl>
+	  </li>
+	</ul>-->
+
+	<!-- 顶部右侧添加选项卡监听 -->
+	<ul class="layui-nav layui-layout-right layui-hide-xs" lay-filter="side-top-right">
+		   <li class="layui-nav-item">
+				<a class="name" href="javascript:;"><i class="layui-icon">&#xe629;</i>主题</a>
+				<dl class="layui-nav-child">
+					<dd data-skin="0"><a href="javascript:;">默认</a></dd>
+					<dd data-skin="1"><a href="javascript:;">橙色</a></dd>
+					<dd data-skin="2"><a href="javascript:;">蓝色</a></dd>
+				</dl>
+			</li>
+
+		  <li class="layui-nav-item">
+			<a href="javascript:;">
+			  <i class="layui-icon layui-icon-user"></i>
+			  {:session('username')}
+			</a>
+			<dl class="layui-nav-child">
+                <dd><a href="javascript:;" data-url="__MAN__/user/myedit"><i class="layui-icon layui-icon-wenjian"></i> 个人资料</a></dd>
+                <dd><a href="javascript:;" data-url="__MAN__/user/password"><i class="layui-icon layui-icon-wenjian"></i> 修改密码</a></dd>
+			</dl>
+		  </li>
+		  <li class="layui-nav-item"><a href="{:url('/manage/login')}">退出</a></li>
+	</ul>
+  </div>
+  
+  <div class="layui-side layui-bg-black my-side">
+    <div class="layui-side-scroll">
+      <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+       {include file='public/left'}
+    </div>
+  </div>
+  
+    <!-- body -->
+    <div class="layui-body my-body">
+        <div class="layui-tab layui-tab-card my-tab" lay-filter="card" lay-allowClose="true">
+            <ul class="layui-tab-title">
+                <li class="layui-this" lay-id="1"><span><i class="layui-icon layui-icon-home"></i> 欢迎页</span></li>
+            </ul>
+			<button class="layui-btn layui-btn-sm layui-btn-normal" id="reload-btn"><i class="layui-icon layui-icon-refresh layui-anim layui-anim-rotate layui-anim-loop"></i></button>
+
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <iframe src="__MAN__/{$welcome}" data-id=1 frameborder="0"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  
+  <div class="layui-footer my-footer">
+    <!-- 底部固定区域 -->
+    © {:date('Y')} {:config('gocms.copyright')} All Rights Reserved.
+  </div>
+</div>
+
+<!-- 右键菜单 -->
+<div class="my-dblclick-box" style="display: none">
+    <table class="layui-tab dblclick-tab">
+        <tr class="card-refresh">
+            <td><i class="layui-icon">&#x1002;</i>刷新当前标签</td>
+        </tr>
+        <tr class="card-close">
+            <td><i class="layui-icon">&#x1006;</i>关闭当前标签</td>
+				</tr>
+				<tr class="card-close-other">
+					<td><i class="layui-icon">&#x1006;</i>关闭其它标签</td>
+			</tr>
+        <tr class="card-close-all">
+            <td><i class="layui-icon">&#x1006;</i>关闭所有标签</td>
+        </tr>
+    </table>
+</div>
+
+{include file='public/footer'}
+<script src="__STATIC__/manage/main.js"></script>
+
+{notin name=":session('groupid')" value='1'}
+<script>
+layui.use(['element','layer'], function(){
+	 var element = layui.element
+	,$ = layui.jquery
+	,layer = layui.layer
+	,side = $('.my-side')
+	,body = $('.my-body')
+	,footer = $('.my-footer');
+
+  // var index=layer.open({
+	// 	type:2,
+	// 	id:'tongzhi',
+	// 	content:'__MAN__/news/top',
+	// 	offset: 'rb',
+	// 	area:['400px','250px'],
+	// 	title:"<i class='layui-icon layui-icon-speaker' style='font-size:20px'></i>通知公告",
+	// 	anim: 2,
+	// 	shade: 0,
+	// 	skin:'layui-layer-lan',
+	// 	maxmin :true,
+	// 	min:function(layro){
+	// 		layro.addClass('rightMess');
+	// 	}
+	// });
+  
+	// setTimeout(function(){
+	// 	$('#layui-layer'+index).addClass('rightMess');
+	// 	layer.min(index);
+	// },5000);
+
+});
+</script>
+{/notin}
+</body>
+
+</html>

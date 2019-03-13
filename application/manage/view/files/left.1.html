@@ -1,0 +1,105 @@
+{include file='public/header'}
+<style>
+    body{ background: #F2F2F2; }
+</style>
+<body>
+
+
+<div class="layui-card">
+        <div class="layui-card-header">文件类别</div>
+        <div class="layui-card-body">
+                <ul id="demo" class="ztree" style="margin: 10px 0"></ul>
+        </div>
+</div>
+<div class="layui-card">
+        <div class="layui-card-header">文件搜索</div>
+        <div class="layui-card-body">
+                <form class="layui-form layui-form-pane" action="__MAN__/files/right" target="right" method="GET">
+                    <div class="layui-form-item">
+                            <label class="layui-form-label">关键词</label>
+                            <div class="layui-input-block">
+                        <input type="text" name="key" id="key"  class="layui-input" value="{$Request.get.key|default=''}" placeholder="请输入关键词">
+                            </div>
+                    </div>
+                    <div class="layui-form-item">
+                            <label class="layui-form-label">编制部门</label>
+                            <div class="layui-input-block">
+                                {$Request.get.bmid|default=0|selectBox='nclass_bm','select','bmid',2,###}
+                            </div>
+                    </div>
+                    <div class="layui-form-item">
+                            <label class="layui-form-label">每页显示</label>
+                            <div class="layui-input-block">
+                            <select name="pagesize">
+                                    <option value="">-请选择-</option>
+                                    <option value="30" {$Request.get.pagesize==30?='selected'}>30</option>
+                                    <option value="50" {$Request.get.pagesize==50?='selected'}>50</option>
+                                    <option value="100" {$Request.get.pagesize==100?='selected'}>100</option>
+                            </select>
+                            </div>
+                        </div>
+                    <div class="layui-form-item" align="center">
+                        <button class="layui-btn" lay-submit="" lay-filter="OK">搜索</button>
+                    </div>
+                </form>        
+        </div>
+</div>
+
+     
+
+{include file='public/footer'}
+<script src="__STATIC__/include/jquery-1.11.1.min.js"></script>
+<script src="__STATIC__/zTree/js/jquery.ztree.all-3.5.min.js"></script>
+<script>
+
+    var zNodes = {$tree};
+    var chkboxType = {"Y": "ps", "N": "s"};
+
+    var setting = {
+        view: {
+            dblClickExpand: false,
+            showLine: false
+        },
+        data: {
+            simpleData: {
+                enable: true
+            }
+        },
+        check: {
+            enable: false,
+            chkboxType: {"Y": "ps", "N": "s"}
+        },
+        callback: {
+            onClick: zTreeOnClick,
+        }
+
+    };
+
+function zTreeOnClick(event, treeId, treeNode) {
+    //alert(treeNode.tId + ", " + treeNode.name);
+    //alert(treeNode.id);
+    //ajaxContent({classid:treeNode.id});
+    parent.document.getElementById('right').src='__MAN__/files/right?classid='+treeNode.id;
+
+};
+
+    $(document).ready(function(){
+        zTreeObj=$.fn.zTree.init($("#demo"), setting, zNodes);
+        //ajaxContent({});
+    });
+
+
+    layui.use(['form'], function(){
+            var form = layui.form;
+
+            //监听提交
+            form.on('submit(OK)', function(data){
+                //layer.msg(JSON.stringify(data.field));
+                //return false;
+                zTreeObj.cancelSelectedNode();
+
+            });
+    });
+</script>
+</body>
+</html>

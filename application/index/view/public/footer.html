@@ -1,0 +1,66 @@
+<script type="text/javascript" src="__STATIC__/include/bootstrap.min.js"></script>
+<script type="text/javascript" src="__STATIC__/include/jquery.flexslider-min.js"></script>
+<script type="text/javascript" src="__STATIC__/include/bootstrap-dialog.js"></script>
+<script src="__STATIC__/include/wow.min.js"></script>
+<script src="__STATIC__/include/tooltip.js"></script>
+<script src="__STATIC__/include/jquery.qrcode.min.js"></script>
+<script src="__STATIC__/include/my.validator.js"></script>
+<script src="__STATIC__/include/jquery.form.min.js"></script>
+<script>
+$(function () { 
+	new WOW().init();
+	
+	$(".header .mobileMenuBtn_con").html($('.header #header_menu').html());
+	$('.header_menu li a,.mobileMenuBtn_con li a').click(function(){
+	    var obj=$(this).attr('href');
+		var v=(obj=='#top')?0:$(obj).offset().top-60;
+		//alert(v);
+		$('html,body').animate({scrollTop:v}, 500);
+	});
+		
+	$(".header .mobileMenuBtn").click(function() {
+		$(".header .mobileMenu").toggleClass("active");
+	});
+	$(".header .mobileMenuBtn_shad").click(function() {
+		$(".header .mobileMenu").removeClass("active");
+	});	
+	
+	generateQRCode("#qrcode","table",150, 150, "http://127.0.0.1:8080/gongjun/index.php");	
+	
+	$('.qrcode').attr('data-content',$('#qrcode').html());
+
+    $('[data-toggle="popover"]').popover({html:true})
+    
+    $('.pic-list li').hover(function(){
+        $(this).find('.bg').stop(true,false).animate({top:0},500);
+    },function(){
+        $(this).find('.bg').stop(true,false).animate({top:"280px"},500);
+    });
+
+    $('.pic-list').flexslider({
+        animation: "slide",
+        animationLoop: true,
+        directionNav: true,
+        controlNav: false,
+        itemWidth: 240,
+        itemMargin: 10,
+        minItems: 2,
+        maxItems: 4
+    });  
+    
+    $('#myform').validator();
+    
+    $('#myform').ajaxForm({
+            type: "post",  //提交方式
+            url: "{:url('index/guestbook')}", //请求url  
+            success: function (msg) { //提交成功的回调函数  
+                if(msg=='1'){
+                BootstrapDialog.alert('您的留言提交成功',function(){ $('#myform').resetForm(); });
+                }else{
+                BootstrapDialog.alert(msg);
+                }
+                
+            }
+    });
+})
+</script>

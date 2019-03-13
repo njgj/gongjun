@@ -1,0 +1,115 @@
+{include file='public/header'}
+<body>
+<form class="layui-form" action="__MAN__/news/save" method="post">
+    <div class="layui-form-item">
+        <label class="layui-form-label">标题</label>
+        <div class="layui-input-block">
+            <input type="text" name="title" required  lay-verify="required"  class="layui-input" value="{$res.title|default=''}">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">类别</label>
+        <div class="layui-input-block">
+            <select name="classid" lay-verify="number">
+                <option value="">-请选择-</option>
+                {$res.classid|default=0|getTreeOption='nclass',0,###}
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">作者</label>
+            <div class="layui-input-block">
+                <input type="text" name="author"  class="layui-input"  value="{$res.author|default=''}">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">来源</label>
+            <div class="layui-input-block">
+                <input type="text" name="source"  class="layui-input"  value="{$res.source|default=''}">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="addtime" id="addtime" class="layui-input layui-date"  value="{$res.addtime|default=''}">
+            </div>
+        </div>
+    </div>    
+
+    <div class="layui-form-item"> 
+        <div class="layui-inline">
+            <label class="layui-form-label">关键词</label>
+            <div class="layui-input-block">
+                <input type="text" name="keyword"  class="layui-input"  value="{$res.keyword|default=''}">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">URL</label>
+            <div class="layui-input-block">
+                <input type="text" name="url"  class="layui-input"  value="{$res.url|default=''}">
+            </div>
+        </div>
+        <div class="layui-inline">
+                <label class="layui-form-label">图片</label>
+                <div class="layui-input-block">
+                    <div class="layui-upload">
+                        <button type="button" class="layui-btn" id="upload"><i class="layui-icon">&#xe67c;</i>上传图片</button>
+                        <div class="layui-upload-list">
+                            <img class="layui-upload-img" id="img" src="__STATIC__/uploadfile/images/{$res.imgurl|default='nopic.png'}" style="height: 100px;" onclick="window.open(this.src)">
+                        </div>
+                        <input type="hidden" name="imgurl" id="imgurl"  class="layui-input"  value="{$res.imgurl|default=''}">
+                    </div>
+                </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">内容</label>
+        <div class="layui-input-block">
+            <textarea name="content" placeholder="请输入内容" class="layui-textarea" style="height: 300px">{$res.content|default=''}</textarea>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="OK">立即提交</button>
+
+            <input name="Action" type="hidden" value="{$Action}">
+            {if $Action=='Edit'}
+            <input type="hidden" name="id" value="{$res.id}">
+            {/if}
+        </div>
+    </div>
+</form>
+
+{include file='public/footer'}
+<script>
+    getEditor('content');
+    layui.use(['form','mymod'], function(){
+        var form = layui.form
+            ,$ = layui.jquery
+            ,mymod = layui.mymod;
+
+        mymod.upfile({
+            id:'#upload',
+            type:'images',
+            url:"__MAN__/upload",
+            dir:'__STATIC__/uploadfile'
+        });
+
+    
+
+        //监听提交
+        form.on('submit(OK)', function(data){
+            //layer.msg(JSON.stringify(data.field));
+            //return false;
+
+        });
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,12 @@
+{include file='public/header'}
+<body>
+<table width="100%" class="layui-table" lay-even>
+{volist name='res' id='v' mod='2'}
+    {eq name="mod" value="0"}<tr>{/eq}
+    <td class="col">{$v.COLUMN_COMMENT|default='未定义'}</td><td>{res.{$v.COLUMN_NAME}|default=''}</td>
+    {eq name="mod" value="1"}</tr>{/eq}
+{/volist}
+</table>
+</body>
+</html>
+

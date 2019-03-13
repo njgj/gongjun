@@ -1,0 +1,66 @@
+{include file='public/header'}
+<body>
+<blockquote class="layui-elem-quote" style="text-align: right">
+    <form class="layui-form layui-input-inline"  lay-filter="ssform">
+
+        <div class="layui-input-inline">
+            <input type="text" name="title" value="{$Request.get.title}" placeholder="文件名称" class="layui-input">
+        </div>
+        <div class="layui-input-inline" style="width:120px">
+            <select name="classid">
+                <option value="">-文件类别-</option>
+                {:getTreeOption('nclass_select',5,$Request.get.classid)}
+            </select>
+        </div>
+        <div class="layui-input-inline" style="width:120px">
+                {$Request.get.bmid|default=0|selectBox='nclass_bm','select','bmid',2,###}
+    </div>
+		<div class="layui-input-inline" style="width:120px">
+			<select name="states">
+			{:getStateOption($Request.get.states)}
+			</select>
+		</div>           
+        <button class="layui-btn" lay-submit="" lay-filter="search"><i class="layui-icon layui-btn-icon"></i>查询</button>
+
+
+    </form>
+</blockquote>
+
+    <table width="100%" border="1" class="layui-table">
+        <thead>
+        <tr>
+            <th width='50%'>文件类别</th>
+            <th>数量</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name='res' id='v'}
+        <tr>
+            <td>{$v.classid|getClassPathById='nclass_select',###}</td>
+            <td>{$v.num}</td>
+
+        </tr>
+        {/volist}
+    </table>
+
+    <table width="100%" border="1" class="layui-table">
+        <thead>
+        <tr>
+            <th width='50%'>部门</th>
+            <th>数量</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name='res2' id='v'}
+        <tr>
+            <td>{$v.bmid|getClassName='nclass_bm',###}</td>
+            <td>{$v.num}</td>
+
+        </tr>
+        {/volist}
+    </table>
+
+{include file='public/footer'}
+
+</body>
+</html>

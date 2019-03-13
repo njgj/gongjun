@@ -1,0 +1,32 @@
+{include file='public/header'}
+<body>
+	<p align="right"><a onClick="newdialog('新增','__MAN__/nclass/add/tb/{$tb}',800,580)" class="layui-btn">新增</a></p>
+
+<table width="100%" border="1" class="layui-table">
+   <thead>
+    <tr>
+        <th>ID</th>
+      <th>类别</th>
+      <!-- <th>编码</th> -->
+      <th>排序</th>
+      <th>操作</th>
+    </tr> 
+  </thead>
+  <tbody>
+   {volist name='res' id='v'}
+    <tr>
+        <td>{$v.classid}</td>
+      <td style="padding-left: {$v.level*30}px">&nbsp;├&nbsp;{$v.classname}</td>
+      <!-- <td>{$v.code|default=''}</td> -->
+      <td>{$v.orderid}</td>
+      <td>
+    <a class="layui-btn layui-btn-xs" onClick="newdialog('新增','__MAN__/nclass/add/tb/{$tb}/classid/{$v.classid}',800,580)">新增</a>
+    <a class="layui-btn layui-btn-xs layui-btn-normal" onClick="newdialog('编辑','__MAN__/nclass/edit/tb/{$tb}/classid/{$v.classid}',800,580)">编辑</a>
+    <a class="layui-btn layui-btn-xs layui-btn-danger" onClick="del(this,'{$v.classname}','__MAN__/nclass/del/tb/{$tb}',{$v.classid})">删除</a></a></td>
+    </tr>
+    {/volist}
+  </tbody>
+</table>
+{include file='public/footer'}
+</body>
+</html>

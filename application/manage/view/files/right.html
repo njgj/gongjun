@@ -1,0 +1,42 @@
+{include file='public/header'}
+<body>
+
+
+<table width="100%" border="1" class="layui-table right-main tablesorter">
+        <thead>
+        <tr>
+            
+            <th>文件名称</th>
+            <th>文件大小（KB）</th>
+            <th>文件类别</th>
+            <th>时间</th>
+        </tr>
+        </thead>
+        <tbody>
+            {empty name='res'}<tr><td colspan="4" height=100 align="center"><i class="layui-icon layui-icon-face-smile" style="font-size: 36px; color: #FC0;"></i>  暂无相关文件</td></tr>{/empty}
+
+            {volist name='res' id='v'}
+            <tr>
+                <td><a href='javascript:;' onclick="top.newdialog('{$v.title}','__MAN__/files/view/id/{$v.id}',1024,500);">{$v.title|replaceKey=$Request.get.key,###}</a></td><td>{$v.filesize}</td><td>{$v.classid|getClassName='nclass_select',###}</td><td>{$v.addtime}</td>
+            </tr>
+            {/volist}
+        </tbody>
+</table>            
+{$res}
+
+{include file='public/footer'}
+<script charset="utf-8" src="__STATIC__/include/jquery-1.11.1.min.js"></script>
+<script charset="utf-8" src="__STATIC__/include/jquery.tablesorter.js"></script>
+<script type="text/javascript">
+    $(function(){
+        
+        $(".tablesorter").tablesorter();
+        //$("#sortTable").tablesorter({headers:{5:{sorter:false}}});//class="sorter-false"
+        // sort on the first column and second column in ascending order
+        //$("#sortTable").tablesorter({ sortList: [[0,0], [1,0]] });        
+        /*$("#sortTable select").select2({ minimumResultsForSearch: -1 });*/
+    });
+    
+</script>
+</body>
+</html>

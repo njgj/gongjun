@@ -1,0 +1,12 @@
+      <ul class="layui-nav layui-nav-tree"  lay-filter="side-main">
+       {volist name="res" id="v"}  
+        <li class="layui-nav-item layui-nav-item">
+          <a class="" href="javascript:;">{$v.classname}</a>
+          <dl class="layui-nav-child">
+            {volist name="v.child" id="v2"}
+              <dd><a href="javascript:;" data-url="__MAN__/{$v2.url}"><i class="layui-icon layui-icon-file"></i> {$v2.classname}</a></dd>
+            {/volist}
+          </dl>
+        </li>
+        {/volist}
+      </ul>

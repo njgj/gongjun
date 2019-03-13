@@ -1,0 +1,62 @@
+{include file='public/header'}
+<body>
+<form class="layui-form" action="_MAN__/controller/save" method="post">
+{volist name='res' id='v'}
+	<div class="layui-form-item">
+		<label class="layui-form-label">{$v.COLUMN_COMMENT|default='未定义'}</label>
+		<div class="layui-input-block">
+			{if $v.DATA_TYPE=='varchar' or $v.DATA_TYPE=='date'}<input type="text" name="{$v.COLUMN_NAME}" id="{$v.COLUMN_NAME}" required  lay-verify="required" placeholder="请输入{$v.COLUMN_COMMENT}" class="layui-input" value="{res.{$v.COLUMN_NAME}|default=''}">{/if}
+			{if $v.DATA_TYPE=='float' or $v.DATA_TYPE=='double' or $v.DATA_TYPE=='decimal'}<input type="number" name="{$v.COLUMN_NAME}" required  lay-verify="number" placeholder="请输入{$v.COLUMN_COMMENT}" class="layui-input" value="{res.{$v.COLUMN_NAME}|default=''}">{/if}
+			{if $v.DATA_TYPE=='text'}<textarea name="{$v.COLUMN_NAME}" placeholder="请输入{$v.COLUMN_COMMENT}" class="layui-textarea">{res.{$v.COLUMN_NAME}|default=''}</textarea>{/if}
+			{if $v.DATA_TYPE=='tinyint'}<input type="checkbox" name="{$v.COLUMN_NAME}" lay-skin="switch"  lay-text="ON|OFF">{/if} {if $v.DATA_TYPE=='int'}<select name="{$v.COLUMN_NAME}" lay-verify="required">
+				<option value="">- 请选择 -</option>
+			</select>{/if}         
+		</div>
+	</div>
+{/volist}
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="OK">立即提交</button>
+            {literal}
+            <input name="Action" type="hidden" value="{$Action}">
+            {if $Action=='Edit'}
+            <input type="hidden" name="id" value="{$res.id}">
+            {/if}
+            {/literal}
+        </div>
+    </div>
+</form>
+{include file='public/footer'}
+<script>
+
+    layui.use(['form','laydate','mymod'], function(){
+        var form = layui.form
+            ,laydate = layui.laydate
+            ,mymod = layui.mymod;
+
+        mymod.upfile({
+            id:'#upload',
+            type:'images',
+            url:'_MAN__/upload',
+            dir:'_STATIC__/uploadfile'
+        });
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#addtime' //指定元素
+        });
+		
+		
+        //监听提交
+        form.on('submit(OK)', function(data){
+            //layer.msg(JSON.stringify(data.field));
+            //return false;
+
+        });
+    });
+
+
+</script>
+</body>
+</html>
+

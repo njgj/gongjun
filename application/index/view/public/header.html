@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0"/>
+<title>{:config('gocms.name')}</title>
+<link rel="icon" href="favicon.ico">
+<link rel="stylesheet" type="text/css" href="__STATIC__/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="__STATIC__/css/main.css">
+<link rel="stylesheet" type="text/css" href="__STATIC__/css/animate.min.css">
+<script type="text/javascript" src="__STATIC__/include/jquery-1.11.1.min.js"></script>
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+  <script src="__STATIC__/include/html5shiv.js"></script>
+  <script src="__STATIC__/include/respond.min.js"></script>
+<![endif]-->
+</head>
+
+<body>
+<div class="header" id="top">
+
+      <div class="container">
+        <div class="row">
+          <div class="col-md-3 col-xs-6">
+            <div class="logo"> <a href="#" title="返回首页"> <img src="__STATIC__/images/logo.png"/> </a> </div>
+          </div>
+          <div class="col-md-9 col-xs-6  visible-lg visible-md">   
+              <div class="header_menu" id="header_menu">
+                <ul>
+                  <li><a href="#top"  class='active'  onClick="return false">首页</a></li>
+                  
+                  <li><a href="#service" onClick="return false">服务范围</a></li>
+                  
+                  <li><a href="#case" onClick="return false">成功案例</a></li>
+                  
+                  <li><a href="#process" onClick="return false">服务流程</a></li>
+                  
+                  <li><a href="#aboutus" onClick="return false">关于我</a></li> 
+                  
+                    <li><a href="manage/login"><span class="badge">GOCMS</span></a></li>
+                </ul>
+              </div>         
+          </div>
+        </div>
+      </div>
+      <div class="mobileMenu visible-xs">
+        <div class="mobileMenuBtn"><span class="span1"></span><span class="span2"></span><span class="span3"></span></div>
+        <div class="mobileMenuBtn_shad"></div>
+        <div class="mobileMenuBtn_con"></div>
+      </div>  
+      
+      <a class="qrcode visible-md visible-lg" href="javascript:;"  data-container="body" data-toggle="popover" data-placement="bottom" data-content=""></a>
+      <div id='qrcode' style="display:none"></div>
+</div>

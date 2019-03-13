@@ -1,0 +1,52 @@
+{include file='public/header'}
+<body>
+<table width="100%" class='layui-table' lay-even>
+    <thead>
+    </thead>
+    <tbody>
+        <tr>
+            <td width="20%" align="center">用户名</td>
+            <td width="32%" align="center">{$res.username}</td>
+            <td width="16%" align="center">&nbsp;</td>
+            <td width="32%" align="center">&nbsp;</td>
+        </tr>
+        <tr>
+          <td align="center">用户组</td>
+          <td align="center">{$res.groupid|getGroupName}</td>
+          <td align="center">&nbsp;</td>
+          <td align="center">&nbsp;</td>
+        </tr>
+        <tr>
+          <td align="center">真实姓名</td>
+          <td align="center">{$res.realname}</td>
+          <td align="center">性别</td>
+          <td align="center">{$res.sex}</td>
+        </tr>
+        <tr>
+          <td align="center">电话</td>
+          <td align="center">{$res.tel}</td>
+          <td align="center">手机</td>
+          <td align="center">{$res.mobile}</td>
+        </tr>
+        <tr>
+          <td align="center">Email</td>
+          <td align="center">{$res.email}</td>
+          <td align="center">邮编</td>
+          <td align="center">{$res.postcode}</td>
+        </tr>
+        <tr>
+          <td align="center">所在单位</td>
+          <td align="center">{$res.company2}</td>
+          <td align="center">&nbsp;</td>
+          <td align="center">&nbsp;</td>
+        </tr>
+        <tr>
+          <td align="center">地址</td>
+          <td align="center">{$res.address}</td>
+          <td align="center">&nbsp;</td>
+          <td align="center">&nbsp;</td>
+      </tr>
+    </tbody>
+</table>
+</body>
+</html>

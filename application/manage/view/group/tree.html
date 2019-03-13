@@ -1,0 +1,25 @@
+{include file='public/header'}
+<body>
+<form class="layui-form layui-form-pane" action="__MAN__/group/treesave" method="post">
+
+    <ul id="demo" class="ztree"></ul>
+
+    <input type="hidden" name='ids' id='ids' readonly>
+    <input type="hidden" name="groupid" value="{$groupid}">
+    <button class="layui-btn" lay-submit lay-filter="OK" onclick="treeSubmit()">立即提交</button>
+</form>
+{include file='public/footer'}
+<script src="__STATIC__/ztree/js/jquery-1.4.4.min.js"></script>
+<script src="__STATIC__/zTree/js/jquery.ztree.all-3.5.min.js"></script>
+<script>
+
+    var zNodes = {$res};
+
+    var zTreeObj=initTree("demo", true, {"Y": "ps", "N": "s"});
+
+    function treeSubmit() {
+        assignment(zTreeObj.getCheckedNodes());
+    }
+</script>
+</body>
+</html>

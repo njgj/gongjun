@@ -1,0 +1,35 @@
+{include file='public/header'}
+<body>
+
+<p align="right"><a onClick="newdialog('新增','__MAN__/group/add',600,400)" class="layui-btn">新增</a></p>
+
+<form class="layui-form" lay-filter="dataform" method="post">
+    <table width="100%" border="1" class="layui-table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>名称</th>
+            <th>说明</th>
+            <th>排序</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name='res' id='v'}
+        <tr>
+            <td>{$v.groupid}</td>
+            <td>{$v.groupname}</td>
+            <td>{$v.remark}</td>
+            <td>{$v.orderid}</td>
+            <td>
+                <a class="layui-btn layui-btn-xs" onClick="newdialog('权限','__MAN__/group/tree/groupid/{$v.groupid}',400,580)">权限</a>
+                <a class="layui-btn layui-btn-xs layui-btn-normal" onClick="newdialog('编辑','__MAN__/group/edit/groupid/{$v.groupid}',600,400)">编辑</a>
+                <a class="layui-btn layui-btn-xs layui-btn-danger" onClick="del(this,'{$v.groupname}','__MAN__/group/del',{$v.groupid})">删除</a></a></td>
+        </tr>
+        {/volist}
+    </table>
+</form>
+{include file='public/footer'}
+
+</body>
+</html>

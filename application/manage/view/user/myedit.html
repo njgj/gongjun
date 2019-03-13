@@ -1,0 +1,103 @@
+{include file='public/header'}
+<body>
+<fieldset class="layui-elem-field">
+    <legend>修改基本信息</legend>
+    <div class="layui-field-box">
+        <form class="layui-form layui-form-pane" action="__MAN__/user/savemyedit" method="post">
+            <div class="layui-form-item">
+                <label class="layui-form-label">用户名</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="username" required  lay-verify="required"  class="layui-input layui-disabled" value="{$res.username|default=''}" disabled>
+
+                </div>
+            </div>
+
+
+            <div class="layui-form-item">
+                <div  class="layui-inline">
+                    <label class="layui-form-label">真实姓名</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="realname" required  lay-verify="required"  class="layui-input" value="{$res.realname|default=''}">
+                    </div>
+                </div>
+                <div  class="layui-inline">
+                    <label class="layui-form-label">性别</label>
+                    <div class="layui-input-inline">
+                        <input type="radio" name="sex" value="男" title="男" {eq name="$res.sex|default=''" value="男"}checked{/eq}>
+                        <input type="radio" name="sex" value="女" title="女" {eq name="$res.sex|default=''" value="女"}checked{/eq}>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div  class="layui-inline">
+                    <label class="layui-form-label">电话</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="tel"  class="layui-input"  value="{$res.tel|default=''}">
+                    </div>
+                </div>
+                <div  class="layui-inline">
+                    <label class="layui-form-label">手机</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="mobile"  class="layui-input"  value="{$res.mobile|default=''}">
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div  class="layui-inline">
+                    <label class="layui-form-label">Email</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="email"  class="layui-input"  value="{$res.email|default=''}">
+                    </div>
+                </div>
+                <div  class="layui-inline">
+                    <label class="layui-form-label">邮编</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="postcode"  class="layui-input"  value="{$res.postcode|default=''}">
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div  class="layui-inline">
+                    <label class="layui-form-label">所在单位</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="company2"  class="layui-input"  value="{$res.company2|default=''}">
+                    </div>
+                </div>
+                <div  class="layui-inline">
+                    <label class="layui-form-label">地址</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="address"  class="layui-input"  value="{$res.address|default=''}">
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit lay-filter="OK">立即提交</button>
+
+                </div>
+            </div>
+        </form>
+    </div>
+</fieldset>
+
+{include file='public/footer'}
+<script>
+    //getSampleEditor('content');
+    layui.use('form', function(){
+        var form = layui.form;
+
+        //监听提交
+        form.on('submit(OK)', function(data){
+            //layer.msg(JSON.stringify(data.field));
+            //return false;
+
+        });
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,169 @@
+{include file="public/header,public/focus"}
+<div id="service" class="line">
+   <div class="container">
+        <h2 class="title">服务范围<small>Service</small></h2>
+        <div class="row">
+            <div class="item col-md-3 col-sm-6 col-xs-6 wow flipInX">
+                <img src="__STATIC__/images/l-ic1-h.png">
+                <h3>网站建设</h3>
+                <small>website construction</small>
+            </div>
+            <div class="item col-md-3 col-sm-6 col-xs-6 wow flipInX">
+                <img src="__STATIC__/images/l-ic2-h.png">
+                <h3>项目运营</h3>
+                <small>technical support</small>
+            </div>
+            <div class="item col-md-3 col-sm-6 col-xs-6 wow flipInX">
+                <img src="__STATIC__/images/l-ic3-h.png">
+                <h3>微信开发</h3>
+                <small>development weixin</small>
+            </div>
+            <div class="item col-md-3 col-sm-6 col-xs-6 wow flipInX">
+                <img src="__STATIC__/images/l-ic5-h.png">
+                <h3>系统开发</h3>
+                <small>development system</small>
+            </div>
+        </div>
+       
+    </div>
+</div>
+
+<div id="case" class="line">
+   <div class="container">
+        <h2 class="title">成功案例<small>Case</small></h2>
+        <div class="pic-list">
+            <ul class="slides">
+                {volist name="res.news" id="vo"}
+                <li>
+                    <img src="__STATIC__/uploadfile/images/{$vo.imgurl}">
+                    <div class="bg">
+                    <div class="txt">{$vo.title}</div>
+                    <a href="{$vo.url}" target="_blank" class="btn-case">+</a>
+                    </div>
+                </li>
+                {/volist}
+            </ul>
+        </div>
+       
+    </div>
+</div>
+
+<div id="process" class="line">
+   <div class="container">
+        <h2 class="title">服务流程<small>Process</small></h2>
+        <div class="row">
+            <div class="item col-md-3 col-sm-6 col-xs-6 wow flipInY">
+                <img src="__STATIC__/images/mod-custom01.png">
+                <h3>需求沟通</h3>
+                <p>倾听客户需求，了解用户使用环境和操作流程</p>
+            </div>         
+            <div class="item col-md-3 col-sm-6 col-xs-6 wow flipInY">
+                <img src="__STATIC__/images/mod-custom02.png">
+                <h3>项目策划</h3>
+                <p>头脑风景交互情景模拟原型设计</p>
+            </div>  
+            <div class="item col-md-3 col-sm-6 col-xs-6 wow flipInY">
+                <img src="__STATIC__/images/mod-custom03.png">
+                <h3>交互设计</h3>
+                <p>从用户的角度思考，模拟用户行为</p>
+            </div>  
+            <div class="item col-md-3 col-sm-6 col-xs-6 wow flipInY">
+                <img src="__STATIC__/images/mod-custom04.png">
+                <h3>视觉创意</h3>
+                <p>色彩及平面元素设定，结构和布局规范确认</p>
+            </div>  
+            <div class="item col-md-3 col-sm-6 col-xs-6 wow flipInY" data-wow-delay="0.5s">
+                <img src="__STATIC__/images/mod-custom05.png">
+                <h3>前端制作</h3>
+                <p>HTML5、CSS3、JS实现页面的动态展示</p>
+            </div>    
+            <div class="item col-md-3 col-sm-6 col-xs-6 wow flipInY" data-wow-delay="0.5s">
+                <img src="__STATIC__/images/mod-custom06.png">
+                <h3>技术开发</h3>
+                <p>数据对接与程序开发</p>
+            </div>   
+            <div class="item col-md-3 col-sm-6 col-xs-6 wow flipInY" data-wow-delay="0.5s">
+                <img src="__STATIC__/images/mod-custom07.png">
+                <h3>测试反馈</h3>
+                <p>修改调整，规范完善</p>
+            </div>
+            <div class="item col-md-3 col-sm-6 col-xs-6 wow flipInY" data-wow-delay="0.5s">
+                <img src="__STATIC__/images/mod-custom08.png">
+                <h3>上线维护</h3>
+                <p>项目上线，运行维护</p>
+            </div>                                
+        </div>
+       
+    </div>
+</div>
+
+<div id="aboutus" class="line">
+   <div class="container">
+        <h2 class="title">关于我<small>About me</small></h2>
+        <div class="row">
+            <div class="col-md-6">
+                <div id="resume">
+                   <div class="row border">
+                       <div class="col-md-6 text-center">
+                           <div class="face"><img src="__STATIC__/images/face.png" class="img-circle img-thumbnail"></div>
+                           <h4 style="margin:10px auto">龚俊</h4>
+                           <p class="mylabel">
+                            <span class="label label-primary">南京</span>
+                            <span class="label label-warning">10年+</span>
+                            <span class="label label-primary">PMP</span>
+                            <span class="label label-success">中级</span>
+                            <span class="label label-success">本科</span>
+                            <span class="label label-warning">web前端</span>
+                            <span class="label label-warning">PHP</span>
+                            <span class="label label-primary">信息服务</span>
+                            </p>
+                       </div>
+                       <div class="col-md-6">{$res.intro}</div>   
+                    </div>   
+                    <div class="box skill wow flipInX">
+                         <div class="hd"><h3>技能特长<small>Skill</small></h3></div>    
+                         <div class="bd">
+                            {volist name="res.skill" id="vo"}
+						    <div class="col-xs-5 text-right">{$vo.name}</div>
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-{$vo.style}" role="progressbar" aria-valuenow="{$vo.value}" aria-valuemin="0" aria-valuemax="100" style="width:{$vo.value}%">{$vo.label}</div>
+                            </div>
+                            {/volist}
+
+                         </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5 col-md-offset-1">
+                <ul class="tel border">
+                    <li class="col-xs-3"><a href="javascript:;"  data-container="body" data-toggle="popover" data-placement="top" data-content="<img src='images/weixin.png' height=200>"><img src="__STATIC__/images/so-weixin.png"/></a></li>
+                    <li class="col-xs-3"><a href="http://wpa.qq.com/msgrd?v=3&uin=117680527&site=qq&menu=yes" target="_blank"><img src="__STATIC__/images/so-qq.png"/></a></li>
+                    <li class="col-xs-3"><a href="mailto:gongjun123321@163.com"><img src="__STATIC__/images/so-mail.png"/></a></li>
+                    <li class="col-xs-3"><a href="###"><img src="__STATIC__/images/so-iphone.png"/></a></li>
+                    <div class="clearfix"></div>
+                </ul>
+                
+             
+                <form id="myform" method="post">
+                  <div class="form-group">
+                    <input type="text" class="form-control" name="realname" id="realname" placeholder="姓名" datatype="Require">
+                  </div>
+                  <div class="form-group">
+                    <input type="text" class="form-control" name="tel" id="tel" placeholder="电话" datatype="Require">
+                  </div>
+                  <div class="form-group">
+                    <input type="text" class="form-control" name="email" id="email" placeholder="邮箱" datatype="Require">
+                  </div>
+                  <div class="form-group">
+                    <textarea name="content" rows="5"  class="form-control" id="content" placeholder="留言" datatype="Limit" min=1></textarea>
+                  </div>
+                  <button type="submit" class="btn btn-success btn-lg btn-block">我要留言</button>
+                </form>
+            </div>
+        </div>
+       
+    </div>
+</div>
+{include file="public/footer"}
+</body>
+</html>

@@ -1,0 +1,95 @@
+{include file='public/header'}
+<body style="background: #FFF">
+<style>
+	.layui-card { border:3px solid #F2F2F2; }
+	.layui-card-body{ width: 90%; height: 250px;  }
+	.layui-card-header { font-weight: bold; }
+	.layui-card-header span { float: right; }
+	/*图标块*/
+	.panel_box{ margin-bottom:5px;}
+	.panel{ text-align:center; height:90px;}
+	.panel_box a{display:block; border-radius:5px; overflow:hidden; height:80px; background-color:#f2f2f2 !important; }
+	.panel_icon{ width:40%; display: inline-block; line-height:80px; float:left; position:relative; height:100%;}
+	.panel_icon i{ font-size:40px !important; color:#fff; display: inline-block;}
+	.panel_word{ width:60%; display: inline-block; float:right; margin:13px 0 14px; }
+	.panel_word span { color: red;}	
+	.panel em{ font-style:normal;}	
+</style>
+
+<blockquote class="layui-elem-quote main_btn">
+	<p>实时数据</p>
+</blockquote>
+
+<div class="layui-row layui-col-space10 panel_box">
+    {in name=":session('groupid')" value='1,2'}
+	<div class="panel layui-col-xs12 layui-col-sm6 layui-col-md4">
+		<a href="javascript:;" data-url="__MAN__/user/" title="用户管理" class="my-tab-btn">
+			<div class="panel_icon layui-bg-green">
+				<i class="layui-icon">&#xe612;</i>
+			</div>
+			<div class="panel_word">
+				<h2><span>{$arr.users_wait}</span> / {$arr.users}</h2>
+				<cite><span>待审核</span> / 用户总数</cite>
+			</div>
+		</a>
+	</div>
+	<div class="panel layui-col-xs12 layui-col-sm6 layui-col-md4">
+		<a href="javascript:;" data-url="__MAN__/news/" title="新闻管理" class="my-tab-btn">
+			<div class="panel_icon layui-bg-black">
+				<i class="layui-icon">&#xe705;</i>
+			</div>
+			<div class="panel_word">
+				<h2><span>{$arr.news_wait}</span> / {$arr.news}</h2>
+				<cite><span>待审核</span> / 信息总数</cite>
+			</div>
+		</a>
+	</div>
+
+	{/in}
+
+
+</div>
+
+
+
+{in name=":session('groupid')" value='1'}
+<div class="layui-row layui-col-space10">
+	<div class="layui-col-lg6 layui-col-md12">
+		<blockquote class="layui-elem-quote title">系统基本参数</blockquote>
+		<table class="layui-table magt0">
+			<colgroup>
+				<col width="150">
+				<col>
+			</colgroup>
+			<tbody>
+			<tr>
+				<td>当前版本</td>
+				<td class="version">{:config('gocms.version')}</td>
+			</tr>
+			<!-- <tr>
+				<td>开发作者</td>
+				<td class="author">{:config('gocms.author')}</td>
+			</tr> -->
+			<tr>
+				<td>网站首页</td>
+				<td class="url">{:config('gocms.url')}</td>
+			</tr>
+			<tr>
+				<td>服务器环境</td>
+				<td class="server">{:config('gocms.server')}</td>
+			</tr>
+			<tr>
+				<td>数据库版本</td>
+				<td class="database">{:config('gocms.database')}</td>
+			</tr>
+			</tbody>
+		</table>
+
+	</div>
+
+</div>
+{/in}
+
+{include file='public/footer'}
+</body>
+</html>

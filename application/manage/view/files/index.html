@@ -1,0 +1,78 @@
+{include file='public/header'}
+<body>
+<blockquote class="layui-elem-quote" style="text-align: right">
+    <form class="layui-form layui-input-inline"  lay-filter="ssform">
+
+        <div class="layui-input-inline">
+            <input type="text" name="title" value="{$Request.get.title}" placeholder="文件名称" class="layui-input">
+        </div>
+        <div class="layui-input-inline" style="width:120px">
+            <select name="classid">
+                <option value="">-文件类别-</option>
+                {:getTreeOption('nclass_select',5,$Request.get.classid)}
+            </select>
+        </div>
+        <div class="layui-input-inline" style="width:120px">
+                {$Request.get.bmid|default=0|selectBox='nclass_bm','select','bmid',2,###}
+    </div>
+		<div class="layui-input-inline" style="width:120px">
+			<select name="states">
+			{:getStateOption($Request.get.states)}
+			</select>
+		</div>           
+        <button class="layui-btn" lay-submit="" lay-filter="search"><i class="layui-icon layui-btn-icon"></i>查询</button>
+        <a class="layui-btn layui-btn-normal" onClick="newdialog('新增','__MAN__/files/add',800,550)">新增</a>
+        <a class="layui-btn layui-btn-normal" onClick="newdialog('批量上传','__MAN__/files/batch',800,550)">批量上传</a>
+        <a class="layui-btn layui-btn-danger" onClick="delAll('__MAN__/files/del')">批量删除</a>
+
+    </form>
+</blockquote>
+
+<form class="layui-form" lay-filter="dataform" method="post">
+    <table width="100%" border="1" class="layui-table">
+        <thead>
+        <tr>
+            <th><input type="checkbox" name="chkAll" lay-filter="chkAll" lay-skin="primary"> </th>
+            <th>ID</th>
+            <th>文件名称</th>
+            <th>编制部门</th>
+            <th width=120>文件类别</th>
+            <th>时间</th>
+            <th width=80>状态</th>
+            <th width=150>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name='res' id='v'}
+        <tr>
+            <td><input type="checkbox" name="id[]" value="{$v.id}" lay-skin="primary"> </td>
+            <td>{$v.id}</td>
+            <td>{$v.title}</td>
+            <td>{$v.bmid|getClassPath='nclass_bm',###}</td>
+            <td>{$v.classid|getClassPathById='nclass_select',###}</td>
+            <td>{$v.addtime}</td>
+            <td>{$v.states|chkState}</td>
+            <td>
+      {in name=":session('groupid')" value="1"}
+      <div class="layui-inline" style="width: 100px; margin-right: 20px;">
+        <select name="states" lay-filter="chkstates" data-id="{$v.id}">
+		{:getStateOption()}
+        </select>
+      </div> 
+      {/in}
+
+                <a class="layui-btn layui-btn-xs" onClick="top.newdialog('详情','__MAN__/files/detail/id/{$v.id}',1024,550)">查看</a>
+                {if condition="session('groupid')==1 || $v.states!=1"}
+                <a class="layui-btn layui-btn-xs layui-btn-normal" onClick="newdialog('编辑','__MAN__/files/edit/id/{$v.id}',800,550)">编辑</a>
+                <a class="layui-btn layui-btn-xs layui-btn-danger" onClick="del(this,'{$v.title}','__MAN__/files/del',{$v.id})">删除</a></a>
+                {/if}
+            </td>
+        </tr>
+        {/volist}
+    </table>
+</form>
+{$res}
+{include file='public/footer'}
+
+</body>
+</html>

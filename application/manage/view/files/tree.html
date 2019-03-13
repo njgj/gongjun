@@ -1,0 +1,113 @@
+{include file='public/header'}
+
+<body>
+<style>
+body { background: url('__STATIC__/images/bg.png') center top no-repeat;}
+</style>    
+    <div class="layui-container">
+        <div class="layui-row layui-col-space10">
+            <div class="layui-col-md7">
+                    <div id="x" style=" height:300px; border:1px dashed #CCC;"></div>
+            </div>
+            <div class="layui-col-md5">
+                    <div id="y" style=" height:300px; border:1px dashed #CCC;"></div>
+            </div>
+        </div>
+        <div class="layui-row layui-col-space10">
+            <div class="layui-col-md12">
+                    <div id="z" style=" height:400px; border:1px dashed #CCC;"></div>
+            </div>
+        </div>     
+    </div>
+
+    {include file='public/footer'}
+    <!-- ECharts单文件引入 -->
+    <script src="__STATIC__/include/echarts.min.v4.js"></script>
+    <script src="__STATIC__/include/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript">
+   $(function(){
+        treeChart('#x',6,'技术源标准',{$x},[30,90]);
+        treeChart('#y',7,'管理基础标准',{$y},[30,120]);
+        treeChart('#z',8,'岗位工作标准',{$z},[30,150]);
+   });
+    
+    function treeChart(id,classid,name,data,size){
+    // 基于准备好的dom，初始化echarts图表
+    var myChart = echarts.init($(id)[0]); 
+    
+    var newdata={
+        'name':name,
+        'id':classid,
+        'children':data,
+        'symbolSize':[90,30],
+        'itemStyle':{
+            'color':'#FC0'
+        }
+    };
+    //alert(newdata.children);
+
+    var option = {
+        tooltip: {
+            trigger: 'item',
+            triggerOn: 'mousemove'
+        },
+        series:[
+            {
+                type: 'tree',
+                left:0,
+                right:0,
+                top:'20px',
+                bottom:'18%',
+
+                data: [newdata],
+
+                symbol: 'rect',
+                symbolSize:size,
+                orient: 'vertical',
+                expandAndCollapse: false,
+                
+                itemStyle:{
+                    borderColor:'#FFF',
+                    borderWidth:0,                    
+                },
+
+                label: {
+                    normal: {
+                        position: 'inside',
+                        verticalAlign: 'middle',
+                        align: 'center',
+                        fontSize: 12,
+                        formatter:function(v){
+                            if(v.name!=name){
+                               return v.name.split('').join('\n'); 
+                            }
+                            
+                        }
+                            
+                    }
+                },
+
+                lineStyle:{
+                    curveness:0.8,
+                    type:'solid'
+                },
+
+
+
+                animationDurationUpdate: 750
+            }
+        ]
+    };                         
+    // 为echarts对象加载数据 
+    myChart.setOption(option);
+
+        myChart.on('click', function (params) {
+            // 控制台打印数据的名称
+            //console.log(params.data.id);
+            top.newdialog(params.name,'__MAN__/files/right/classid/'+params.data.id,1000,500);
+        });
+
+    }
+    </script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+{include file='public/header'}
+<body>
+<p>
+<div class="layui-inline">
+    <input type="text" name="key" id="key" class="layui-input" placeholder="请输入关键词">
+</div>
+<button class="layui-btn" onclick="getNodesByParamFuzzy()">查询</button>
+</p>
+
+    <ul id="demo" class="ztree" style="margin: 10px 0"></ul>
+
+    <input type="hidden" name='names' id='names' readonly>
+    <input type="hidden" name='ids' id='ids' readonly>
+    <input type="hidden" name='codes' id='codes' readonly>
+
+<p align="center">
+    <button class="layui-btn"  onclick="getValue()">确定</button>
+    <button class="layui-btn layui-btn-danger"  onclick="clearValue()">取消</button>
+</p>
+
+{include file='public/footer'}
+<script src="__STATIC__/ztree/js/jquery-1.4.4.min.js"></script>
+<script src="__STATIC__/zTree/js/jquery.ztree.all-3.5.min.js"></script>
+<script>
+
+    var zNodes = {$res};
+    var chkboxType = {"Y": "ps", "N": "s"};
+    var textid = parent.document.getElementById('{$textid}');
+    var codeid = parent.document.getElementById('{$codeid}');
+
+    var setting = {
+        view: {
+            dblClickExpand: false,
+            showLine: false
+        },
+        data: {
+            simpleData: {
+                enable: true
+            }
+        },
+        check: {
+            enable: false,
+            chkboxType: {"Y": "ps", "N": "s"}
+        },
+        callback: {
+            onClick: onClick,
+            onCheck: onCheck,
+            {if $flag==1}
+            beforeClick: zTreeOnBeforeClick
+            {/if}
+        }
+
+    };
+
+    {if $isdx==1}
+        setting.check.enable = true;
+    {/if}
+
+    if (chkboxType !== undefined && chkboxType != null) {
+        setting.check.chkboxType = chkboxType;
+    }
+
+    $(document).ready(function(){
+        zTreeObj=$.fn.zTree.init($("#demo"), setting, zNodes);
+    });
+
+    function getNodesByParamFuzzy() {
+        var key = $("#key").get(0).value;
+        if (key.length > 0) {
+            var treeNodes = zTreeObj.getNodesByParamFuzzy("name", key);
+            if (treeNodes && treeNodes.length>0) {
+                //var msg = "找到节点信息: ";
+                for (var i=0; i<treeNodes.length; i++) {
+                    //msg += ("\n(" + (i+1) + ") tId=" + treeNodes[i].tId + ", name=" + treeNodes[i].name + ", level=" + treeNodes[i].level);
+                    zTreeObj.selectNode(treeNodes[i]);
+                }
+                //alert(msg);
+            } else {
+                layer.msg("没有找到匹配的节点");
+            }
+        }else{
+            layer.msg("请输入关键词查询");
+        }
+    }
+
+    function zTreeOnBeforeClick(treeId, treeNode) {
+        var check = (treeNode && !treeNode.isParent);
+        if (!check)  layer.msg("请选择其子节点！");
+        return check;
+    }
+
+    function getValue(){
+        textid.value=names.value;
+        {if $iscode==0}
+            codeid.value=ids.value;
+        {else /}
+            codeid.value=codes.value;
+        {/if}
+        textid.focus();
+        textid.blur();
+        parent.layer.closeAll();
+
+    }
+
+    function clearValue(){
+        textid.value='';
+        codeid.value='';
+        textid.focus();
+        textid.blur();
+        parent.layer.closeAll();
+    }
+</script>
+</body>
+</html>

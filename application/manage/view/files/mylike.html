@@ -1,0 +1,98 @@
+{include file='public/header'}
+<body>
+<blockquote class="layui-elem-quote" style="text-align: right">
+    <form class="layui-form layui-input-inline"  lay-filter="ssform">
+
+        <div class="layui-input-inline">
+            <input type="text" name="title" value="{$Request.get.title}" placeholder="文件名称" class="layui-input">
+        </div>
+        <div class="layui-input-inline" style="width:120px">
+            <select name="classid">
+                <option value="">-文件类别-</option>
+                {:getTreeOption('nclass_select',5,$Request.get.classid)}
+            </select>
+        </div>
+        <div class="layui-input-inline" style="width:120px">
+                {$Request.get.bmid|default=0|selectBox='nclass_bm','select','bmid',2,###}
+    </div>
+         
+        <button class="layui-btn" lay-submit="" lay-filter="search"><i class="layui-icon layui-btn-icon"></i>查询</button>
+       
+
+    </form>
+</blockquote>
+
+<form class="layui-form" lay-filter="dataform" method="post">
+    <table width="100%" border="1" class="layui-table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>文件名称</th>
+            <th>编制部门</th>
+            <th width=120>文件类别</th>
+            <th>时间</th>
+            <th width=150>加入常用文件</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name='res' id='v'}
+        <tr>
+            <td>{$v.id}</td>
+            <td><a href='javascript:;' onclick="top.newdialog('{$v.title}','__MAN__/files/view/id/{$v.id}',1024,500);">{$v.title}</a></td>
+            <td>{$v.bmid|getClassName='nclass_bm',###}</td>
+            <td>{$v.classid|getClassPathById='nclass_select',###}</td>
+            <td>{$v.addtime}</td>
+            <td>
+                <button type="button" class="layui-btn layui-btn-danger layui-btn-sm my-btn" my-data-id="{$v.fileid}">取消</button>
+            </td>               
+        </tr>
+        {/volist}
+    </table>
+</form>
+{$res}
+{include file='public/footer'}
+<script>
+layui.use(['form','layer'], function(){
+    var form = layui.form
+        ,layer = layui.layer
+        ,$ = layui.jquery;
+    
+
+    $('.my-btn').click(function(){
+            var tr=$(this).parent().parent();
+            //var id=tr.find('td:eq(0)').text();
+            var name=tr.find('td:eq(1)').text();
+            var fileid=$(this).attr('my-data-id');
+            //alert(id+' '+name);
+            if(confirm('确定取消'+name+'收藏吗?')){
+
+                ajaxAction('Del',fileid);
+         
+            } 
+    });
+    
+
+    function ajaxAction(action,fileid){
+        $.ajax({
+            type:'post',
+            url:'__MAN__/files/like',
+            data:"Action="+action+"&fileid="+fileid,
+            dataType: "json",
+            success:function(data){
+                //if(data.code=='OK'){
+                    layer.msg(data.msg,function(){
+                        window.location.reload();
+                    });
+                //}
+                
+            }
+        });
+    }
+
+});
+
+
+
+</script> 
+</body>
+</html>

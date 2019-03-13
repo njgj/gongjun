@@ -1,0 +1,12 @@
+{include file='public/header'}
+<style>
+.list li a { border-bottom: 1px dotted #CCC; }
+</style>
+<body>
+    <ul class="list">
+        {volist name='res' id='v'}
+        <li><a href="javascript:;" onClick="top.newdialog('详情','__MAN__/news/detail/id/{$v.id}',800,550)">{$v.title}</a><span>{$v.addtime|formatdate}</span></li>
+        {/volist}
+    </ul>
+</body>
+</html>

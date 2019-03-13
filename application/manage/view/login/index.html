@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{:config('gocms.name')}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="__STATIC__/layui/css/layui.css">
+    <style type="text/css">
+        html,body { height: 100%; width: 100%; margin: 0; padding: 0; }
+        body { background: url('__STATIC__/images/2.jpg') center center no-repeat; }
+        .login-head{position:fixed;left:0;top:0;width:80%;height:60px;line-height:60px;background:#000;padding:0 10%;}
+        .login-head h1{color:#fff;font-size:24px;font-weight:600;text-align:center;}
+        .login-box{
+            max-width: 400px;
+            margin: 0 auto;
+            position: relative;
+            top: 50%; /*偏移*/
+            transform: translateY(-50%);
+            background-color:#fff;
+            padding:15px 30px;
+            border-radius:10px;
+            box-shadow: 5px 5px 15px #999;
+        }
+        .login-box .layui-input{font-size:15px;font-weight:400}
+        .login-box input[name="password"]{letter-spacing:5px;font-weight:800}
+        .login-box .layui-btn{width:100%;}
+        .login-box .copyright{text-align:center;height:50px;line-height:50px;font-size:12px;color:#ccc}
+        .login-box .copyright a{color:#ccc;}
+    </style>
+</head>
+<body>
+<div class="login-head">
+    <h1>{:config('gocms.name')}</h1>
+</div>
+<div class="login-box">
+    <form action="{:url('chklogin')}" method="post" class="layui-form layui-form-pane">
+        <fieldset class="layui-elem-field layui-field-title">
+            <legend>用户登陆</legend>
+        </fieldset>
+        <div class="layui-form-item">
+            <label class="layui-form-label">登陆账号</label>
+            <div class="layui-input-block">
+                <input type="text" name="username" class="layui-input" lay-verify="required" lay-verify-msg='登陆账号不能为空' autofocus>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">登陆密码</label>
+            <div class="layui-input-block">
+                <input type="password" name="userpwd" class="layui-input" lay-verify="required" lay-verify-msg='登陆密码不能为空'>
+            </div>
+        </div>
+<!--         <div class="layui-form-item">
+            <label class="layui-form-label">安全验证</label>
+            <div class="layui-input-inline">
+                <input type="text" name="code" class="layui-input">
+            </div>
+        </div> -->
+        <input type="submit" value="登陆" lay-submit="" lay-filter="formLogin" class="layui-btn">
+    </form>
+    <div class="copyright">
+        © {:date('Y')} <a href="{:config('gocms.url')}" target="_blank">{:config('gocms.copyright')}</a> All Rights Reserved.
+    </div>
+</div>
+
+
+{include file='public/footer'}
+<script>
+    layui.use(['form','layer'], function(){
+        var form = layui.form
+        ,layer=layui.layer;
+
+        //监听提交
+        form.on('submit(OK)', function(data){
+            //layer.msg(JSON.stringify(data.field));
+            //return false;
+
+        });
+    });
+</script>
+</body>
+</html>

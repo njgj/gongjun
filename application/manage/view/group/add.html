@@ -1,0 +1,54 @@
+{include file='public/header'}
+<body>
+<form class="layui-form layui-form-pane" action="__MAN__/group/save" method="post">
+  <div class="layui-form-item">
+    <label class="layui-form-label">名称</label>
+    <div class="layui-input-block">
+      <input type="text" name="groupname" required  lay-verify="required"  class="layui-input" value="{$res.groupname|default=''}">
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">说明</label>
+    <div class="layui-input-block">
+      <input type="text" name="remark" required  lay-verify="required"  class="layui-input" value="{$res.remark|default=''}">
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">排序ID</label>
+    <div class="layui-input-block">
+      <input type="number" name="orderid" required  lay-verify="number"  class="layui-input" value="{$res.orderid|default=''}">
+    </div>
+  </div>    
+
+        
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+      <button class="layui-btn" lay-submit lay-filter="OK">立即提交</button>
+    
+      <input name="Action" type="hidden" value="{$Action}">
+      {if $Action=='Edit'}
+      <input type="hidden" name="groupid" value="{$res.groupid}">
+      {/if}
+    </div>
+  </div>
+</form>
+
+{include file='public/footer'} 
+<script>
+//getSampleEditor('content');
+layui.use('form', function(){
+  var form = layui.form;
+  
+  //监听提交
+  form.on('submit(OK)', function(data){
+    //layer.msg(JSON.stringify(data.field));
+    //return false;
+	  
+  });
+});
+</script>
+
+</body>
+</html>

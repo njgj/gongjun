@@ -1,0 +1,77 @@
+{include file='public/header'}
+<body>
+
+<blockquote class="layui-elem-quote" style="text-align: right">
+<form class="layui-form layui-input-inline"  lay-filter="ssform">
+
+	<div class="layui-input-inline">
+        <input type="text" name="username" value="{$Request.get.username}" placeholder="用户名" class="layui-input">
+	</div>
+	<div class="layui-input-inline">
+        <select name="groupid">
+		{:getGroupOption($Request.get.groupid)}
+        </select>
+    </div>
+
+    <div class="layui-input-inline">
+            <select name="cityid">
+                    <option value="">-所在部门-</option>
+                    {$Request.get.cityid|default=0|getTreeOption='nclass_bm',1,###}
+            </select>
+    </div>
+     
+
+	<div class="layui-input-inline">
+        <select name="states">
+		{:getStateOption($Request.get.states)}
+        </select>
+	</div>       
+    <button class="layui-btn" lay-submit="" lay-filter="search"><i class="layui-icon layui-btn-icon"></i>查询</button>
+	<a class="layui-btn layui-btn-normal newsAdd_btn" onClick="newdialog('新增','__MAN__/user/add',800,550)">新增</a>
+	<a class="layui-btn layui-btn-danger batchDel" onClick="delAll('__MAN__/user/del')">批量删除</a>
+
+</form>
+</blockquote>
+
+<form class="layui-form" lay-filter="dataform" method="post">
+<table width="100%" border="1" class="layui-table">
+   <thead>
+    <tr>
+      <th><input type="checkbox" name="chkAll" lay-filter="chkAll" lay-skin="primary"> </th>
+      <th>ID</th>
+      <th>用户名</th>
+      <th>用户组</th>
+      <th>所在部门</th>
+      <th>时间</th>
+      <th>状态</th>
+      <th>操作</th>
+    </tr> 
+  </thead>
+  <tbody>
+   {volist name='res' id='v'}
+    <tr>
+      <td><input type="checkbox" name="id[]" value="{$v.userid}" lay-skin="primary"> </td>
+      <td>{$v.userid}</td>
+      <td>{$v.username}</td>
+      <td>{$v.groupid|getGroupName}</td>
+      <td>{$v.cityid|getClassName='nclass_bm',###}</td>
+      <td>{$v.addtime}</td>
+      <td>{$v.states|chkState}</td>
+      <td>
+      <div class="layui-inline" style="width: 100px; margin-right: 20px;">
+        <select name="states" lay-filter="chkstates" data-id="{$v.userid}">
+		{:getStateOption()}
+        </select>
+      </div>   
+    <a class="layui-btn layui-btn-xs" onClick="newdialog('用户信息','__MAN__/user/detail/userid/{$v.userid}',800,550)">查看</a>
+    <a class="layui-btn layui-btn-xs layui-btn-normal" onClick="newdialog('编辑','__MAN__/user/edit/userid/{$v.userid}',800,550)">编辑</a>
+    <a class="layui-btn layui-btn-xs layui-btn-danger" onClick="del(this,'{$v.username}','__MAN__/user/del',{$v.userid})">删除</a></a></td>
+    </tr>
+    {/volist}
+</table>
+</form>
+{$res}
+{include file='public/footer'}
+
+</body>
+</html>

@@ -1,0 +1,38 @@
+{include file='public/header'}
+<body>
+    <table class="layui-table">
+        <tr>
+            <td>文件名称</td><td>{$res.title}</td>
+        </tr>
+        <tr>
+            <td>文件类别</td><td>{$res.classid|getClassPathById='nclass_select',###}</td>
+        </tr>
+        <tr>
+            <td>编制部门</td><td>{$res.bmid|getClassPath='nclass_bm',###}</td>
+        </tr>
+        <tr>
+            <td>是否允许参建单位查看</td><td>{$res.ispub|getClassName='nclass_select',###}</td>
+        </tr>
+        <tr>
+            <td>文件地址</td><td><a href="__STATIC__/uploadfile/file/{$res.fileurl}" target="_blank">{$res.fileurl}</a></td>
+        </tr> 
+        <tr>
+                <td>文件大小</td><td>{$res.filesize}KB</td>
+            </tr>               
+        <!-- <tr>
+            <td>文件描述</td><td>{$res.content}</td>
+        </tr> -->
+        <tr>
+            <td>关键词</td><td>{$res.keyword}</td>
+        </tr>
+        <tr>
+            <td>点击率</td><td>{$res.hits}</td>
+        </tr>
+        <tr>
+            <td>上传者</td><td>{$res.userid|getUserName}</td>
+        </tr>
+
+    </table>
+
+</body>
+</html>

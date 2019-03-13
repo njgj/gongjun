@@ -1,0 +1,66 @@
+{include file='public/header'}
+<body>
+
+<blockquote class="layui-elem-quote" style="text-align: right">
+    <form class="layui-form layui-input-inline"  lay-filter="ssform">
+
+        <div class="layui-input-inline">
+            <input type="text" name="title" value="{$Request.get.title}" placeholder="标题" class="layui-input">
+        </div>
+        <div class="layui-input-inline">
+            <select name="classid">
+                <option value="">-请选择-</option>
+                {:getTreeOption('nclass_zx',0,$Request.get.classid)}
+            </select>
+        </div>
+        <div class="layui-input-inline">
+            <select name="states">
+                {:getStateOption($Request.get.states)}
+            </select>
+        </div>
+        <button class="layui-btn" lay-submit="" lay-filter="search"><i class="layui-icon layui-btn-icon"></i>查询</button>
+        <a class="layui-btn layui-btn-normal" onClick="newdialog('新增','__MAN__/zixun/add',1000,550)">新增</a>
+        <a class="layui-btn layui-btn-danger" onClick="delAll('__MAN__/zixun/del')">批量删除</a>
+
+    </form>
+</blockquote>
+
+<form class="layui-form" lay-filter="dataform" method="post">
+    <table width="100%" border="1" class="layui-table">
+        <thead>
+        <tr>
+            <th><input type="checkbox" name="chkAll" lay-filter="chkAll" lay-skin="primary"> </th>
+            <th>ID</th>
+            <th>标题</th>
+            <th>类别</th>
+            <th>时间</th>
+          <th>状态</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name='res' id='v'}
+        <tr>
+            <td><input type="checkbox" name="id[]" value="{$v.id}" lay-skin="primary"> </td>
+            <td>{$v.id}</td>
+            <td>{$v.title}</td>
+            <td>{$v.classid|getClassName='nclass_zx',###}</td>
+            <td>{$v.addtime}</td>
+            <td>{$v.states|chkState}</td>
+            <td>
+                <div class="layui-inline" style="width: 100px; margin-right: 20px;">
+                    <select name="states" lay-filter="chkstates" data-id="{$v.id}">
+                        {:getStateOption()}
+                    </select>
+                </div>
+                <a class="layui-btn layui-btn-xs" onClick="newdialog('用户信息','__MAN__/zixun/detail/id/{$v.id}',1000,550)">查看</a>
+                <a class="layui-btn layui-btn-xs layui-btn-normal" onClick="newdialog('编辑','__MAN__/zixun/edit/id/{$v.id}',1000,550)">编辑</a>
+                <a class="layui-btn layui-btn-xs layui-btn-danger" onClick="del(this,'{$v.title}','__MAN__/zixun/del',{$v.id})">删除</a></a></td>
+        </tr>
+        {/volist}
+    </table>
+</form>
+{$res}
+{include file='public/footer'} 
+</body>
+</html>

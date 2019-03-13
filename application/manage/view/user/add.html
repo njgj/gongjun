@@ -1,0 +1,135 @@
+{include file='public/header'}
+<body>
+<form class="layui-form layui-form-pane" action="__MAN__/user/save" method="post">
+    <div class="layui-form-item">
+        <label class="layui-form-label">用户名</label>
+        <div class="layui-input-block">
+            <input type="text" name="username" required  lay-verify="required"  class="layui-input" value="{$res.username|default=''}">
+
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">用户组</label>
+        <div class="layui-input-block">
+            <select name="groupid" lay-verify="required" lay-filter="groupid">
+                {$res.groupid|default=0|getGroupOption}
+            </select>
+        </div>
+    </div>
+
+    <!-- <div class="layui-form-item">
+        <label class="layui-form-label">所在部门</label>
+        <div class="layui-input-block">
+                <select name="cityid" lay-verify="required">
+                        <option value="">-请选择-</option>
+                        {$res.cityid|default=0|getTreeOption='nclass_bm',1,###}
+                </select>
+        </div>
+    </div> -->
+
+
+    <div class="layui-form-item">
+        <div  class="layui-inline">
+            <label class="layui-form-label">真实姓名</label>
+            <div class="layui-input-inline">
+                <input type="text" name="realname" required  lay-verify="required"  class="layui-input" value="{$res.realname|default=''}">
+            </div>
+        </div>
+        <div  class="layui-inline">
+            <label class="layui-form-label">性别</label>
+            <div class="layui-input-inline">
+                <input type="radio" name="sex" value="男" title="男" {eq name="$res.sex|default=''" value="男"}checked{/eq}>
+                <input type="radio" name="sex" value="女" title="女" {eq name="$res.sex|default=''" value="女"}checked{/eq}>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div  class="layui-inline">
+            <label class="layui-form-label">电话</label>
+            <div class="layui-input-inline">
+                <input type="text" name="tel"  class="layui-input"  value="{$res.tel|default=''}">
+            </div>
+        </div>
+        <div  class="layui-inline">
+            <label class="layui-form-label">手机</label>
+            <div class="layui-input-inline">
+                <input type="text" name="mobile"  class="layui-input"  value="{$res.mobile|default=''}">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div  class="layui-inline">
+            <label class="layui-form-label">Email</label>
+            <div class="layui-input-inline">
+                <input type="text" name="email"  class="layui-input"  value="{$res.email|default=''}">
+            </div>
+        </div>
+        <div  class="layui-inline">
+            <label class="layui-form-label">邮编</label>
+            <div class="layui-input-inline">
+                <input type="text" name="postcode"  class="layui-input"  value="{$res.postcode|default=''}">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div  class="layui-inline">
+            <label class="layui-form-label">所在单位</label>
+            <div class="layui-input-inline">
+                <input type="text" name="company2"  class="layui-input"  value="{$res.company2|default=''}">
+            </div>
+        </div>
+        <div  class="layui-inline">
+            <label class="layui-form-label">地址</label>
+            <div class="layui-input-inline">
+                <input type="text" name="address"  class="layui-input"  value="{$res.address|default=''}">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="OK">立即提交</button>
+            <input name="Action" type="hidden" value="{$Action}">
+            {if $Action=='Edit'}
+            <input type="hidden" name="userid" value="{$res.userid}">
+            {/if}
+
+        </div>
+    </div>
+</form>
+
+{include file='public/footer'}
+<script>
+    //getSampleEditor('content');
+    layui.use('form', function(){
+        var form = layui.form
+        ,$=layui.jquery;
+
+
+        //监听提交
+
+        form.on('select(groupid)', function(data){
+            var v=data.value;
+            //alert(v);
+            if(v==5){
+                $("select[name='cityid']").removeAttr('lay-verify').removeClass('layui-form-danger');
+            }else{
+                $("select[name='cityid']").attr('lay-verify','required');
+            }
+            form.render('select'); 
+        });
+
+        form.on('submit(OK)', function(data){
+            //layer.msg(JSON.stringify(data.field));
+            //return false;
+
+        });
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,225 @@
+{include file='public/header'}
+<body style="background: #f2f2f2">
+<style>
+    .area{ width: 100%; height: 300px;  }
+    .layui-card-header h2 { float: left; font-size: 16px; }
+    .layui-card-header span { float: right; }
+</style>
+<script src="__STATIC__/include/echarts.common.min.js"></script>
+<div>      
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md6">
+            <div class="layui-card">
+                <div class="layui-card-header"><h2>技术源标准</h2><span><button type="button" class="layui-btn layui-btn-primary layui-btn-sm">饼图</button><button type="button" class="layui-btn layui-btn-primary layui-btn-sm">柱状图</button></span></div>
+                <div class="layui-card-body">
+                        <div id="demo1" class="area"></div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md6">
+            <div class="layui-card">
+                <div class="layui-card-header"><h2>管理基础标准</h2><span><button type="button" class="layui-btn layui-btn-primary layui-btn-sm">饼图</button><button type="button" class="layui-btn layui-btn-primary layui-btn-sm">柱状图</button></span></div>
+                <div class="layui-card-body">
+                        <div id="demo2" class="area"></div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md6">
+            <div class="layui-card">
+                <div class="layui-card-header"><h2>用户</h2><span><button type="button" class="layui-btn layui-btn-primary  layui-btn-sm">饼图</button><button type="button" class="layui-btn layui-btn-primary layui-btn-sm">柱状图</button></span></div>
+                <div class="layui-card-body">
+                        <div id="demo3" class="area"></div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md6">
+                <div class="layui-card">
+                    <div class="layui-card-header"><h2>部门</h2><span><button type="button" class="layui-btn layui-btn-primary layui-btn-sm">饼图</button><button type="button" class="layui-btn layui-btn-primary layui-btn-sm">柱状图</button></span></div>
+                    <div class="layui-card-body">
+                            <div id="demo4" class="area"></div>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>
+<script src="__STATIC__/include/jquery-1.11.1.min.js"></script>
+<script type="text/javascript">
+$(function(){
+    var demo1={$demo1};
+    var demo2={$demo2};
+    var demo3={$demo3};
+    var demo4={$demo4};
+
+    myPieChart('技术源标准','demo1',demo1);
+    myPieChart('管理基础标准','demo2',demo2);
+    myPieChart('用户','demo3',demo3);
+    myPieChart('部门','demo4',demo4);    
+
+    $('.layui-card-header span button').click(function(){
+        var flag=$(this).text();
+        var headobj=$(this).parent().parent();
+        var title=headobj.find('h2').text();
+        var id=headobj.next('.layui-card-body').find('div').attr('id');
+        //alert(title+' '+id);
+
+        if(flag=='饼图'){
+            myPieChart(title,id,eval(id));
+        }
+        if(flag=='柱状图'){
+            myBarChart(title,id,eval(id));
+        }       
+        
+    });
+
+});
+
+
+
+function myPieChart(title,id,jsondata){
+// 基于准备好的dom，初始化echarts实例
+var myChart = echarts.init(document.getElementById(id));
+var option = {
+    backgroundColor: "#FFF",
+    title : {
+        text: '',
+        subtext:'',
+        x:'center',
+        top:'30',
+        textStyle: {
+            color: "#000",
+        }
+    },
+    //显示series中信息，提示框组件
+    tooltip : {
+        trigger: 'item',
+        formatter: "{b} : {c} ({d}%)"
+    },
+    toolbox: {
+    　　show: true,
+    　　feature: {
+    　　　　saveAsImage: {
+    　　　　show:true,
+    　　　　excludeComponents :['toolbox'],
+    　　　　pixelRatio: 2
+    　　　　}
+    　　}
+    },
+    series : [
+        {
+            type: 'pie',    //图饼图：pie
+            radius : '50%',    //半径
+            center: ['50%', '50%'],
+            data:jsondata,
+            itemStyle: {  //itemStyle有正常显示：normal，有鼠标hover的高亮显示：emphasis
+                normal: {
+                    label:{
+                        show:true,
+                        formatter:'{b} : {c} ({d}%)'
+                    },
+                    labelLine:{show:true}
+                },
+
+                emphasis: {  //normal显示阴影,与shadow有关的都是阴影的设置
+                    shadowBlur: 10,  //阴影大小
+                    shadowOffsetX: 0,  //阴影水平方向上的偏移
+                    shadowColor: 'rgba(0, 0, 0, 0.5)'  //阴影颜色
+                }
+            }
+        }
+    ]
+};
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);    
+
+}
+
+
+function myBarChart(title,id,jsondata){
+var x=y="";    
+for(var i=0;i<jsondata.length;i++){
+    x+="'"+jsondata[i].name+"',";
+    y+=jsondata[i].value+',';
+}
+if(x.length>0){
+    x='['+x.substring(0,x.length-1)+']';
+}
+if(y.length>0){
+    y='['+y.substring(0,y.length-1)+']';
+}
+// 基于准备好的dom，初始化echarts实例
+var myChart = echarts.init(document.getElementById(id));
+var option = {
+    color: ['#3398DB'],
+    tooltip : {
+        trigger: 'axis',
+        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+    },
+    toolbox: {
+    　　show: true,
+    　　feature: {
+    　　　　saveAsImage: {
+    　　　　show:true,
+    　　　　excludeComponents :['toolbox'],
+    　　　　pixelRatio: 2
+    　　　　}
+    　　}
+    },    
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '15%',
+        containLabel: true,
+        y2:140
+    },
+    xAxis : [
+        {
+            type : 'category',
+            data : eval('(' + x + ')'),
+            axisTick: {
+                alignWithLabel: true
+            },
+            axisLabel:{
+                interval:0,//横轴信息全部显示
+                rotate:-30,//-30度角倾斜显示
+			}
+
+        }
+    ],
+    yAxis : [
+        {
+            type : 'value'
+        }
+    ],
+    series : [
+        {
+            name:'文件数',
+            type:'bar',
+            barWidth: '50%',
+            data:eval('(' + y + ')'),
+            label:{
+                normal:{
+                    show:true,
+                    position:'top',
+                    formatter:'{c}'
+                }
+            }
+        }
+    ]
+};
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);    
+
+}
+
+
+
+    </script>
+
+
+</body>
+
+</html>

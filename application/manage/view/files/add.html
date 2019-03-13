@@ -1,0 +1,123 @@
+{include file='public/header'}
+<body>
+<form class="layui-form" action="__MAN__/files/save" method="post">
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">上传文件</label>
+        <div class="layui-input-block">
+            <div class="layui-upload">
+                <button type="button" class="layui-btn" id="upload"><i class="layui-icon">&#xe67c;</i>上传文件</button>
+                
+                    <a class="layui-btn layui-btn-primary" id="img" href="__STATIC__/uploadfile/file/{$res.fileurl|default=''}" target="_blank" style="display:none">查看</a>
+                
+                <input type="hidden" name="fileurl" id="fileurl"  class="layui-input"  value="{$res.fileurl|default=''}">
+                <input type="hidden" name="filesize" id="filesize"  class="layui-input"  value="{$res.filesize|default=''}">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">文件名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="title" id="title" required  lay-verify="required" lay-verify-msg="请填写文件名称"  class="layui-input" value="{$res.title|default=''}">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">文件类别</label>
+        <div class="layui-input-block">
+            <select name="classid" lay-verify="number" lay-verify-msg="请选择文件类别">
+                <option value="">-请选择-</option>
+                {$res.classid|default=0|getTreeOption='nclass_select',5,###}
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">编制部门</label>
+        <div class="layui-input-block">
+                {$res.bmid|default=0|selectBox='nclass_bm','checkbox','bmid',2,###}
+        </div>
+    </div>
+
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">是否允许参建单位查看</label>
+        <div class="layui-input-block"> 
+            <input type="checkbox" name="ispub" id="ispub" lay-skin="switch" lay-text="YES|NO" {$res.ispub?='checked'} value="1">
+        </div>
+    </div>
+
+    <!-- <div class="layui-form-item">
+        <label class="layui-form-label">文件描述</label>
+        <div class="layui-input-block">
+            <textarea name="content" placeholder="请输入内容" class="layui-textarea" required lay-verify="limit"  style="height: 50px">{$res.content|default=''}</textarea>
+        </div>
+    </div> -->
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">关键词</label>
+        <div class="layui-input-block">
+            <input type="text" name="keyword"  class="layui-input" value="{$res.keyword|default=''}" placeholder="多个关键词用逗号隔开">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="OK">立即提交</button>
+
+            <input name="Action" type="hidden" value="{$Action}">
+            {if $Action=='Edit'}
+            <input type="hidden" name="id" value="{$res.id}">
+            {/if}
+        </div>
+    </div>
+</form>
+
+{include file='public/footer'}
+<script>
+
+    //getEditor('content');
+    layui.use(['form','mymod'], function(){
+        var form = layui.form
+            ,$ = layui.jquery
+            ,mymod = layui.mymod;
+
+        mymod.upfile({
+            id:'#upload',
+            type:'file',
+            input:'#fileurl',
+            oldname: '#title',
+            url:"__MAN__/upload",
+            dir:'__STATIC__/uploadfile/'
+        });  
+
+        //监听提交
+        form.on('submit(OK)', function(data){
+            //layer.msg(JSON.stringify(data.field));
+            //return false;
+
+        });
+
+        if($('#fileurl').val()!=""){
+            $('#img').show();
+        }
+
+        form.on('checkbox', function(data){
+            //alert(data.value);
+            var groupid={:session('groupid')};
+            var bmid={:session('cityid')};
+            if(groupid==4){
+                if(data.value!=bmid){
+                    layer.msg('仅限于本部门');
+                    $(data.elem).removeAttr('checked');
+                    form.render('checkbox');
+                }
+            }
+        }); 
+    });
+    
+</script>
+
+</body>
+</html>

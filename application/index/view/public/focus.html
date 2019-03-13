@@ -1,0 +1,33 @@
+<div class="flexslider">
+  <ul class="slides">
+    <li style="background:url(__STATIC__/images/1.jpg) 50% center no-repeat; ">
+       <div class="group">
+       <h2 class="animated bounceInLeft">10年专业网站建设</h2>
+       <p class="animated bounceInRight">专注于设计体验，专业于解决方案</p>
+       <p><a href="#" class="btn">MORE</a></p>
+       </div>
+    </li>
+    <li style="background:url(__STATIC__/images/2.jpg) 50% center no-repeat; ">
+       <div class="group">
+       <h2 class="animated bounceInLeft">先入为主&nbsp;&nbsp;布局未来</h2>
+       <p class="animated bounceInRight">响应式布局，智能识别多种终端设备</p>
+       <p><a href="#" class="btn">MORE</a></p>
+       </div>
+    </li>
+  </ul>
+</div>
+<script>
+
+$(document).ready(function() {
+			$('.flexslider').flexslider({
+				directionNav: true,
+				pauseOnAction: false,
+				slideshowSpeed: 3000
+			});
+			$('.flex-nav-prev,.flex-nav-next').click(function(){
+				  $('.slides').find('h2,p').removeClass().addClass('slideInLeft animated').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+					$(this).removeClass();
+				  })
+			});
+});
+</script>
